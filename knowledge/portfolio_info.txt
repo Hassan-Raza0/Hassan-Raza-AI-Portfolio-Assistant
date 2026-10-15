@@ -1,0 +1,148 @@
+ABOUT HASSAN RAZA
+
+Name:
+Hassan Raza
+
+Location:
+Karachi, Pakistan
+
+Education:
+Bachelor of Science in Computer Science
+Recent graduate
+
+PROFESSIONAL SUMMARY
+
+Hassan Raza builds practical machine-learning and AI solutions that turn data into reliable, user-focused products. He is a recent Computer Science graduate exploring junior roles in machine learning, AI, and software engineering. His work covers machine learning, deep learning, OCR, natural language processing, computer vision, backend development, and AI application integration.
+
+TECHNICAL SKILLS
+
+Programming Languages:
+Python
+JavaScript
+Java
+C++
+SQL
+
+Generative AI:
+Large Language Models (LLMs)
+Retrieval-Augmented Generation (RAG)
+Prompt Engineering
+Gemini API
+Groq API
+ChromaDB
+Embeddings
+
+AI and Machine Learning:
+Machine Learning
+Computer Vision
+OpenCV
+YOLOv8
+EasyOCR
+FLAN-T5
+EfficientNet-B3
+
+Frontend:
+React.js
+Next.js
+HTML5
+CSS3
+Bootstrap
+
+Backend:
+FastAPI
+Node.js
+Express.js
+REST APIs
+
+Databases:
+MongoDB
+MySQL
+ChromaDB
+
+Programming Concepts:
+Data Structures
+Algorithms
+Object-Oriented Programming
+Problem Solving
+
+Tools:
+Git
+GitHub
+Postman
+VS Code
+MongoDB Compass
+Vercel
+Render
+Railway
+
+PROJECTS
+
+1. FlyRank: From a Hand-Written Rule to a Readable Model
+
+Technologies:
+Python
+Pandas
+Scikit-learn
+Decision Tree
+
+Description:
+Hassan compared a hand-written baseline with a decision-tree classifier. The evaluation stayed on the same split and the same metric, with attention to leakage and an explanation a person can read.
+Repository:
+https://github.com/Hassan-Raza0/flyrank-ml-intership-hassan-raza
+Case study:
+https://hassan-raza0.github.io/hassan-portfolio/case-studies/flyrank
+
+2. Smart Document Verification
+
+Technologies:
+Python
+FastAPI
+EasyOCR
+OpenCV
+RAG
+React
+Node.js
+MongoDB
+
+Description:
+An AI-assisted workflow that extracts document details, compares them with user input, and highlights mismatches. The public portfolio does not include a repository or a live demo for this project.
+Case study:
+https://hassan-raza0.github.io/hassan-portfolio/case-studies/smart-document-verification
+
+3. SentiAware
+
+Technologies:
+FLAN-T5
+EfficientNet-B3
+OCR
+Python
+React
+Node.js
+MongoDB
+
+Description:
+A moderation project that reviews text, images, and text embedded in images. The public portfolio does not include a repository or a live demo for this project.
+Case study:
+https://hassan-raza0.github.io/hassan-portfolio/case-studies/sentiaware
+
+CONTACT
+
+Email:
+hassansoomroraza@gmail.com
+
+GitHub:
+https://github.com/Hassan-Raza0
+
+LinkedIn:
+https://www.linkedin.com/in/hassan-raza-soomro-a11496192/
+
+Portfolio:
+https://hassan-raza0.github.io/hassan-portfolio/
+
+CV:
+https://hassan-raza0.github.io/hassan-portfolio/cv
+
+Booking:
+Email hassansoomroraza@gmail.com with the subject "Booking a conversation with Hassan Raza". There is no separate calendar tool.
+
+The portfolio contact page can also send a message to that inbox after the form service is activated.
