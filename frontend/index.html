@@ -595,6 +595,160 @@
         </footer>
 
     </div>
+    <script>
+
+        // ==========================================
+        // CONFIGURATION & INITIALIZATION
+        // ==========================================
+        // API URL - Easily switch between localhost and production backend
+        const API_URL = "http://127.0.0.1:8000/chat";
+
+        // HTML DOM elements
+        const questionInput = document.getElementById("questionInput");
+        const sendButton = document.getElementById("sendButton");
+        const chatMessages = document.getElementById("chatMessages");
+        const clearBtn = document.getElementById("clearBtn");
+
+        // Set welcome timestamp
+        document.getElementById("welcomeTime").textContent = getCurrentTime();
+
+        // Configure Marked.js to open links in new tab securely
+        marked.setOptions({
+            breaks: true,
+            gfm: true
+        });
+
+        // ==========================================
+        // CORE UI HELPER FUNCTIONS
+        // ==========================================
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function scrollToBottom() {
+            chatMessages.scrollTo({
+                top: chatMessages.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Render Markdown securely into HTML
+        function renderMarkdown(text) {
+            try {
+                const rawHTML = marked.parse(text);
+                // Sanitize HTML to prevent XSS
+                const cleanHTML = DOMPurify.sanitize(rawHTML, {
+                    ADD_ATTR: ['target', 'rel']
+                });
+                // Ensure external links open in new tab
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(cleanHTML, 'text/html');
+                doc.querySelectorAll('a').forEach(anchor => {
+                    anchor.setAttribute('target', '_blank');
+                    anchor.setAttribute('rel', 'noopener noreferrer');
+                });
+                return doc.body.innerHTML;
+            } catch (err) {
+                console.error("Markdown parse error:", err);
+                const div = document.createElement("div");
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        }
+
+        // ==========================================
+        // MESSAGE CREATION FUNCTIONS
+        // ==========================================
+        function addMessage(text, sender) {
+            const row = document.createElement("div");
+            row.className = `message-row ${sender === 'user' ? 'user-row' : 'bot-row'}`;
+
+            const meta = document.createElement("div");
+            meta.className = "message-meta";
+            meta.innerHTML = `
+                <span>${sender === 'user' ? 'You' : 'AI Assistant'}</span>
+                <span>•</span>
+                <span>${getCurrentTime()}</span>
+            `;
+
+            const bubble = document.createElement("div");
+            bubble.className = `message-bubble ${sender === 'user' ? 'user-message' : 'bot-message'}`;
+
+            if (sender === "user") {
+                bubble.textContent = text;
+            } else {
+                bubble.innerHTML = renderMarkdown(text);
+            }
+
+            row.appendChild(meta);
+            row.appendChild(bubble);
+
+            // Add Copy button toolbar for Bot messages (HCI Principle: Flexibility & User Control)
+            if (sender === "bot") {
+                const toolbar = document.createElement("div");
+                toolbar.className = "message-toolbar";
+
+                const copyBtn = document.createElement("button");
+                copyBtn.className = "copy-btn";
+                copyBtn.innerHTML = `
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>Copy</span>
+                `;
+                copyBtn.onclick = () => {
+                    navigator.clipboard.writeText(text);
+                    copyBtn.innerHTML = `<span>✓ Copied</span>`;
+                    setTimeout(() => {
+                        copyBtn.innerHTML = `
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span>Copy</span>
+                        `;
+                    }, 2000);
+                };
+
+                toolbar.appendChild(copyBtn);
+                row.appendChild(toolbar);
+            }
+
+            chatMessages.appendChild(row);
+            scrollToBottom();
+        }
+
+        // Add Loading Pulsing Dots Indicator (HCI Principle: Visibility of System Status)
+        function addLoadingIndicator() {
+            const row = document.createElement("div");
+            row.className = "message-row bot-row";
+            row.id = "loadingIndicator";
+
+            const meta = document.createElement("div");
+            meta.className = "message-meta";
+            meta.innerHTML = `<span>AI Assistant</span> • <span>Thinking...</span>`;
+
+            const bubble = document.createElement("div");
+            bubble.className = "message-bubble bot-message typing-indicator";
+            bubble.innerHTML = `
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            `;
+
+            row.appendChild(meta);
+            row.appendChild(bubble);
+            chatMessages.appendChild(row);
+            scrollToBottom();
+        }
+
+        function removeLoadingIndicator() {
+            const loader = document.getElementById("loadingIndicator");
+            if (loader) loader.remove();
+        }
+    </script>
 
 </body>
 
