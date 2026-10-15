@@ -569,8 +569,22 @@
                 <!-- Suggestion Chips (HCI Principle: Recognition rather than recall) -->
                 <div class="suggestions-wrapper">
                     <div class="suggestions-title">Quick Questions</div>
-                    <div class="chips-container"></div>
+                    <div class="chips-container">
+                        <button class="chip" onclick="askSuggestion('What is Hassan Raza\'s tech stack?')">
+                            What is Hassan Raza's tech stack?
+                        </button>
+                        <button class="chip" onclick="askSuggestion('Tell me about the FlyRank case study')">
+                            Tell me about FlyRank
+                        </button>
+                        <button class="chip" onclick="askSuggestion('What projects has Hassan Raza built?')">
+                            What projects has Hassan built?
+                        </button>
+                        <button class="chip" onclick="askSuggestion('How can I contact Hassan Raza?')">
+                            How can I contact Hassan?
+                        </button>
+                    </div>
 </div>
+                </div>
             </div>
 
         </main>
@@ -595,8 +609,8 @@
         </footer>
 
     </div>
-    <script>
 
+    <script>
         // ==========================================
         // CONFIGURATION & INITIALIZATION
         // ==========================================
@@ -748,6 +762,7 @@
             const loader = document.getElementById("loadingIndicator");
             if (loader) loader.remove();
         }
+
         // ==========================================
         // API COMMUNICATION
         // ==========================================
@@ -803,6 +818,7 @@
         function askSuggestion(text) {
             sendQuestion(text);
         }
+
         // ==========================================
         // EVENT LISTENERS
         // ==========================================
@@ -814,8 +830,21 @@
                 sendQuestion();
             }
         });
-    </script>
 
+        // Clear Chat History (HCI Principle: User Control & Freedom)
+        clearBtn.addEventListener("click", () => {
+            if (confirm("Clear conversation history?")) {
+                const rows = chatMessages.querySelectorAll(".message-row:not(#welcomeMessage)");
+                rows.forEach(row => row.remove());
+                questionInput.focus();
+            }
+        });
+
+        // Auto-focus input on load
+        window.addEventListener("load", () => {
+            questionInput.focus();
+        });
+    </script>
 </body>
 
 </html>
