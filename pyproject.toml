@@ -1,0 +1,14 @@
+[project]
+name = "hassan-raza-ai-portfolio-assistant"
+version = "0.1.0"
+description = "Hassan Raza AI Portfolio Assistant Backend"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "python-dotenv",
+    "google-genai"
+]
+
+[tool.vercel]
+entrypoint = "backend.main:app"
