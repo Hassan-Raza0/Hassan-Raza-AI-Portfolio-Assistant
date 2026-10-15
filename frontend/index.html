@@ -748,6 +748,72 @@
             const loader = document.getElementById("loadingIndicator");
             if (loader) loader.remove();
         }
+        // ==========================================
+        // API COMMUNICATION
+        // ==========================================
+        async function sendQuestion(questionText = null) {
+            const question = questionText || questionInput.value.trim();
+
+            if (!question) return;
+
+            // Display user message
+            addMessage(question, "user");
+            questionInput.value = "";
+
+            // Disable input and send button during API request (HCI Principle: Error Prevention)
+            sendButton.disabled = true;
+            questionInput.disabled = true;
+
+            addLoadingIndicator();
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ question: question })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                removeLoadingIndicator();
+                addMessage(data.answer, "bot");
+
+            } catch (error) {
+                removeLoadingIndicator();
+                console.error("Chat API Error:", error);
+
+                addMessage(
+                    "⚠️ **Unable to connect to the AI service.**\n\nPlease ensure the FastAPI backend is running locally at `http://127.0.0.1:8000/` or verify your network connection.",
+                    "bot"
+                );
+            } finally {
+                sendButton.disabled = false;
+                questionInput.disabled = false;
+                questionInput.focus();
+            }
+        }
+
+        // Trigger question from suggestion chips
+        function askSuggestion(text) {
+            sendQuestion(text);
+        }
+        // ==========================================
+        // EVENT LISTENERS
+        // ==========================================
+        sendButton.addEventListener("click", () => sendQuestion());
+
+        questionInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendQuestion();
+            }
+        });
     </script>
 
 </body>
